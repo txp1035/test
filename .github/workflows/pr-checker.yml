@@ -41,6 +41,10 @@ jobs:
     steps:
       - name: require-result
         run: echo "${{ needs.check-permission.outputs.require-result }}"
+      - name: contains1
+        run: echo "${{ fromJSON(needs.read-file.outputs.require-result) }}"
+      - name: contains2
+        run: echo "${{ github.actor }}"
       - name: contains
         run: echo "${{ contains(fromJSON(needs.read-file.outputs.require-result), github.actor) }}"
       - name: merged
