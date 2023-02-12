@@ -31,7 +31,7 @@ jobs:
         with:
           require: 'write'
 
-    output-log:
+  output-log:
     runs-on: ubuntu-latest
     needs: [read-file, check-permission]
     steps:
