@@ -37,7 +37,7 @@ jobs:
     needs: [read-file, check-permission]
     steps:
       - name: require-result
-        run: echo "${{ needs.check-permission.outputs.require-result }}"
+        run: echo "${{ typeof needs.check-permission.outputs.require-result }}"
       - name: require-result
         run: echo "${{ needs.check-permission.outputs.require-result }}"
       - name: contains
