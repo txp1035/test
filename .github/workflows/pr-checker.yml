@@ -42,7 +42,7 @@ jobs:
       - name: require-result
         run: echo "${{ needs.check-permission.outputs.require-result }}"
       - name: contains1
-        run: echo "${{ fromJSON(needs.read-file.outputs.require-result) }}"
+        run: echo "${{ needs.read-file.outputs.require-result }}"
       - name: contains2
         run: echo "${{ github.actor }}"
       - name: contains
