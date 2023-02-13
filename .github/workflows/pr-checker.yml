@@ -13,6 +13,8 @@ jobs:
     steps:
       - name: github.pull_request
         run: echo "${{ github.event.pull_request }}"
+      - name: sender
+        run: echo "${{ toJSON(github.event.sender) }}"
       - name: activeLockReason
         run: echo "${{ github.event.pull_request.activeLockReason }}"
       - name: additions
