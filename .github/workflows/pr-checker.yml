@@ -38,7 +38,7 @@ jobs:
       - name: bash
         shell: bash
         run: |
-          git diff master
+          git diff main
       - name: github.path
         run: echo "${{ github.path }}"
       - name: check-permission
