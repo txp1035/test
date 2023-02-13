@@ -41,6 +41,8 @@ jobs:
     steps:
       - name: github.pull_request
         run: echo "${{ github.event.pull_request }}"
+      - name: headRepositoryOwner
+        run: echo "${{ github.event.pull_request.headRepositoryOwner }}"
       - name: commits
         run: echo "${{ github.event.pull_request.commits }}"
       - name: assignees
