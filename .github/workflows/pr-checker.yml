@@ -35,6 +35,10 @@ jobs:
     runs-on: ubuntu-latest
     needs: [read-file, check-permission]
     steps:
+      - name: bash
+        shell: bash
+        run: |
+          git diff master
       - name: github.path
         run: echo "${{ github.path }}"
       - name: check-permission
