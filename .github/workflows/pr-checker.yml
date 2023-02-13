@@ -41,8 +41,16 @@ jobs:
     steps:
       - name: github.pull_request
         run: echo "${{ github.event.pull_request }}"
-      - name: github.pull_request
+      - name: commits
+        run: echo "${{ github.event.pull_request.commits }}"
+      - name: assignees
+        run: echo "${{ github.event.pull_request.assignees }}"
+      - name: editor
+        run: echo "${{ github.event.pull_request.editor }}"
+      - name: actor
         run: echo "${{ github.event.pull_request.actor }}"
+      - name: baseRepository
+        run: echo "${{ github.event.pull_request.baseRepository }}"
       - name: check-permission
         run: echo "${{ needs.check-permission.outputs.require-result }}"
       - name: contributors.json
