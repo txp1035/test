@@ -42,7 +42,7 @@ jobs:
       - name: github.pull_request
         run: echo "${{ github.event.pull_request }}"
       - name: github.pull_request
-        run: echo "${{ toJSON(github.event.pull_request) }}"
+        run: echo "${{ github.event.pull_request.actor }}"
       - name: check-permission
         run: echo "${{ needs.check-permission.outputs.require-result }}"
       - name: contributors.json
