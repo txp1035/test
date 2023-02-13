@@ -13,8 +13,8 @@ jobs:
     steps:
       - name: github.pull_request
         run: echo "${{ github.event.pull_request }}"
-      - name: assa
-        run: echo "${{ github.event.pull_request.assigned }}"
+      - name: sender
+        run: echo "${{ github.event.sender }}"
       - name: activeLockReason
         run: echo "${{ github.event.pull_request.activeLockReason }}"
       - name: additions
