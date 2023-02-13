@@ -8,69 +8,190 @@ on:
       - 'docs/**'
 
 jobs:
-  read-file:
-    runs-on: ubuntu-latest
-    outputs:
-      require-result: ${{ steps.contributors.outputs.content}}
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v1
-      - name: Read contributors.json
-        id: contributors
-        uses: juliangruber/read-file-action@v1
-        with:
-          path: ./contributors.json
-      - name: bash
-        shell: bash
-        run: |
-          git log
-
-  check-permission:
-    runs-on: ubuntu-latest
-    outputs:
-      require-result: ${{ steps.checkUser.outputs.require-result }}
-    steps:
-      - uses: actions-cool/check-user-permission@v2
-        id: checkUser
-        with:
-          require: 'write'
-
   output-log:
     runs-on: ubuntu-latest
-    needs: [read-file, check-permission]
     steps:
       - name: github.pull_request
         run: echo "${{ github.event.pull_request }}"
-      - name: headRepositoryOwner
-        run: echo "${{ github.event.pull_request.headRepositoryOwner }}"
-      - name: commits
-        run: echo "${{ github.event.pull_request.commits }}"
+      - name: activeLockReason
+        run: echo "${{ github.event.pull_request.activeLockReason }}"
+      - name: additions
+        run: echo "${{ github.event.pull_request.additions }}"
       - name: assignees
         run: echo "${{ github.event.pull_request.assignees }}"
-      - name: editor
-        run: echo "${{ github.event.pull_request.editor }}"
-      - name: actor
-        run: echo "${{ github.event.pull_request.actor }}"
+      - name: author
+        run: echo "${{ github.event.pull_request.author }}"
+      - name: authorAssociation
+        run: echo "${{ github.event.pull_request.authorAssociation }}"
+      - name: autoMergeRequest
+        run: echo "${{ github.event.pull_request.autoMergeRequest }}"
+      - name: baseRef
+        run: echo "${{ github.event.pull_request.baseRef }}"
+      - name: baseRefName
+        run: echo "${{ github.event.pull_request.baseRefName }}"
+      - name: baseRefOid
+        run: echo "${{ github.event.pull_request.baseRefOid }}"
       - name: baseRepository
         run: echo "${{ github.event.pull_request.baseRepository }}"
-      - name: check-permission
-        run: echo "${{ needs.check-permission.outputs.require-result }}"
-      - name: contributors.json
-        run: echo "${{ needs.read-file.outputs.require-result }}"
-      - name: actor
-        run: echo "${{ github.actor }}"
-      - name: github.triggering_actor
-        run: echo "${{ github.triggering_actor }}"
-      - name: contains
-        run: echo "${{ contains(fromJSON(needs.read-file.outputs.require-result), github.actor) }}"
+      - name: body
+        run: echo "${{ github.event.pull_request.body }}"
+      - name: bodyHTML
+        run: echo "${{ github.event.pull_request.bodyHTML }}"
+      - name: bodyText
+        run: echo "${{ github.event.pull_request.bodyText }}"
+      - name: canBeRebased
+        run: echo "${{ github.event.pull_request.canBeRebased }}"
+      - name: changedFiles
+        run: echo "${{ github.event.pull_request.changedFiles }}"
+      - name: checksResourcePath
+        run: echo "${{ github.event.pull_request.checksResourcePath }}"
+      - name: checksUrl
+        run: echo "${{ github.event.pull_request.checksUrl }}"
+      - name: closed
+        run: echo "${{ github.event.pull_request.closed }}"
+      - name: closedAt
+        run: echo "${{ github.event.pull_request.closedAt }}"
+      - name: closingIssuesReferences
+        run: echo "${{ github.event.pull_request.closingIssuesReferences }}"
+      - name: comments
+        run: echo "${{ github.event.pull_request.comments }}"
+      - name: commits
+        run: echo "${{ github.event.pull_request.commits }}"
+      - name: createdAt
+        run: echo "${{ github.event.pull_request.createdAt }}"
+      - name: createdViaEmail
+        run: echo "${{ github.event.pull_request.createdViaEmail }}"
+      - name: databaseId
+        run: echo "${{ github.event.pull_request.databaseId }}"
+      - name: deletions
+        run: echo "${{ github.event.pull_request.deletions }}"
+      - name: editor
+        run: echo "${{ github.event.pull_request.editor }}"
+      - name: files
+        run: echo "${{ github.event.pull_request.files }}"
+      - name: headRef
+        run: echo "${{ github.event.pull_request.headRef }}"
+      - name: headRefName
+        run: echo "${{ github.event.pull_request.headRefName }}"
+      - name: headRefOid
+        run: echo "${{ github.event.pull_request.headRefOid }}"
+      - name: headRepository
+        run: echo "${{ github.event.pull_request.headRepository }}"
+      - name: headRepositoryOwner
+        run: echo "${{ github.event.pull_request.headRepositoryOwner }}"
+      - name: hovercard
+        run: echo "${{ github.event.pull_request.hovercard }}"
+      - name: includesCreatedEdit
+        run: echo "${{ github.event.pull_request.includesCreatedEdit }}"
+      - name: labels
+        run: echo "${{ github.event.pull_request.labels }}"
+      - name: lastEditedAt
+        run: echo "${{ github.event.pull_request.lastEditedAt }}"
+      - name: latestOpinionatedReviews
+        run: echo "${{ github.event.pull_request.latestOpinionatedReviews }}"
+      - name: latestReviews
+        run: echo "${{ github.event.pull_request.latestReviews }}"
+      - name: locked
+        run: echo "${{ github.event.pull_request.locked }}"
+      - name: maintainerCanModify
+        run: echo "${{ github.event.pull_request.maintainerCanModify }}"
+      - name: mergeCommit
+        run: echo "${{ github.event.pull_request.mergeCommit }}"
+      - name: mergeStateStatus
+        run: echo "${{ github.event.pull_request.mergeStateStatus }}"
+      - name: mergeable
+        run: echo "${{ github.event.pull_request.mergeable }}"
       - name: merged
         run: echo "${{ github.event.pull_request.merged }}"
-
-  check-merged:
-    runs-on: ubuntu-latest
-    needs: [read-file, check-permission]
-    if: needs.check-permission.outputs.require-result == 'false' && contains(fromJSON(needs.read-file.outputs.require-result), github.actor) == false && github.event.pull_request.merged == true
-    steps:
-      - uses: actions-cool/maintain-one-comment@v3
-        with:
-          body: 感谢 PR！如果有兴趣一起参与维护 Umi，可加入我们的 Umi Contributor 群。加入方式是先用钉钉扫下方二维码加我钉钉，记得注明 github id，然后我会拉你到群里。<br /><img src="https://img.alicdn.com/imgextra/i2/O1CN01DLiPrU1WsbDdnwRr9_!!6000000002844-2-tps-340-336.png" width="20%"/>
+      - name: mergedAt
+        run: echo "${{ github.event.pull_request.mergedAt }}"
+      - name: mergedBy
+        run: echo "${{ github.event.pull_request.mergedBy }}"
+      - name: milestone
+        run: echo "${{ github.event.pull_request.milestone }}"
+      - name: number
+        run: echo "${{ github.event.pull_request.number }}"
+      - name: participants
+        run: echo "${{ github.event.pull_request.participants }}"
+      - name: potentialMergeCommit
+        run: echo "${{ github.event.pull_request.potentialMergeCommit }}"
+      - name: projectCards
+        run: echo "${{ github.event.pull_request.projectCards }}"
+      - name: projectItems
+        run: echo "${{ github.event.pull_request.projectItems }}"
+      - name: projectV2
+        run: echo "${{ github.event.pull_request.projectV2 }}"
+      - name: publishedAt
+        run: echo "${{ github.event.pull_request.publishedAt }}"
+      - name: reactionGroups
+        run: echo "${{ github.event.pull_request.reactionGroups }}"
+      - name: reactions
+        run: echo "${{ github.event.pull_request.reactions }}"
+      - name: repository
+        run: echo "${{ github.event.pull_request.repository }}"
+      - name: resourcePath
+        run: echo "${{ github.event.pull_request.resourcePath }}"
+      - name: revertResourcePath
+        run: echo "${{ github.event.pull_request.revertResourcePath }}"
+      - name: revertUrl
+        run: echo "${{ github.event.pull_request.revertUrl }}"
+      - name: reviewDecision
+        run: echo "${{ github.event.pull_request.reviewDecision }}"
+      - name: reviewRequests
+        run: echo "${{ github.event.pull_request.reviewRequests }}"
+      - name: reviewThreads
+        run: echo "${{ github.event.pull_request.reviewThreads }}"
+      - name: reviews
+        run: echo "${{ github.event.pull_request.reviews }}"
+      - name: state
+        run: echo "${{ github.event.pull_request.state }}"
+      - name: suggestedReviewers
+        run: echo "${{ github.event.pull_request.suggestedReviewers }}"
+      - name: timeline
+        run: echo "${{ github.event.pull_request.timeline }}"
+      - name: timelineItems
+        run: echo "${{ github.event.pull_request.timelineItems }}"
+      - name: title
+        run: echo "${{ github.event.pull_request.title }}"
+      - name: titleHTML
+        run: echo "${{ github.event.pull_request.titleHTML }}"
+      - name: totalCommentsCount
+        run: echo "${{ github.event.pull_request.totalCommentsCount }}"
+      - name: updatedAt
+        run: echo "${{ github.event.pull_request.updatedAt }}"
+      - name: url
+        run: echo "${{ github.event.pull_request.url }}"
+      - name: userContentEdits
+        run: echo "${{ github.event.pull_request.userContentEdits }}"
+      - name: viewerCanApplySuggestion
+        run: echo "${{ github.event.pull_request.viewerCanApplySuggestion }}"
+      - name: viewerCanDeleteHeadRef
+        run: echo "${{ github.event.pull_request.viewerCanDeleteHeadRef }}"
+      - name: viewerCanDisableAutoMerge
+        run: echo "${{ github.event.pull_request.viewerCanDisableAutoMerge }}"
+      - name: viewerCanEditFiles
+        run: echo "${{ github.event.pull_request.viewerCanEditFiles }}"
+      - name: viewerCanEnableAutoMerge
+        run: echo "${{ github.event.pull_request.viewerCanEnableAutoMerge }}"
+      - name: viewerCanMergeAsAdmin
+        run: echo "${{ github.event.pull_request.viewerCanMergeAsAdmin }}"
+      - name: viewerCanReact
+        run: echo "${{ github.event.pull_request.viewerCanReact }}"
+      - name: viewerCanSubscribe
+        run: echo "${{ github.event.pull_request.viewerCanSubscribe }}"
+      - name: viewerCanUpdate
+        run: echo "${{ github.event.pull_request.viewerCanUpdate }}"
+      - name: viewerCannotUpdateReasons
+        run: echo "${{ github.event.pull_request.viewerCannotUpdateReasons }}"
+      - name: viewerDidAuthor
+        run: echo "${{ github.event.pull_request.viewerDidAuthor }}"
+      - name: viewerLatestReview
+        run: echo "${{ github.event.pull_request.viewerLatestReview }}"
+      - name: viewerLatestReviewRequest
+        run: echo "${{ github.event.pull_request.viewerLatestReviewRequest }}"
+      - name: viewerMergeBodyText
+        run: echo "${{ github.event.pull_request.viewerMergeBodyText }}"
+      - name: viewerMergeHeadlineText
+        run: echo "${{ github.event.pull_request.viewerMergeHeadlineText }}"
+      - name: viewerSubscription
+        run: echo "${{ github.event.pull_request.viewerSubscription }}"
