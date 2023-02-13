@@ -39,18 +39,8 @@ jobs:
     runs-on: ubuntu-latest
     needs: [read-file, check-permission]
     steps:
-      - name: github.head_ref
-        run: echo "${{ github.head_ref }}"
-      - name: github.base_ref
-        run: echo "${{ github.base_ref }}"
-      - name: github.ref_name
-        run: echo "${{ github.ref_name }}"
-      - name: github.github.ref_type
-        run: echo "${{ github.github.ref_type }}"
-      - name: github.github.ref_type
-        run: echo "${{ github.github.ref_type }}"
-      - name: github.ref
-        run: echo "${{ github.ref }}"
+      - name: github.pull_request
+        run: echo "${{ github.event.pull_request.author.login }}"
       - name: check-permission
         run: echo "${{ needs.check-permission.outputs.require-result }}"
       - name: contributors.json
