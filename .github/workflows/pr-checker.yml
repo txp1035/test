@@ -2,8 +2,7 @@ name: PullRequest Checker
 
 on:
   pull_request_target:
-    types:
-      - closed
+    types: [opened, closed]
     paths-ignore:
       - 'docs/**'
 
