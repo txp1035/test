@@ -41,6 +41,8 @@ jobs:
         run: echo "${{ needs.read-file.outputs.require-result }}"
       - name: actor
         run: echo "${{ github.actor }}"
+      - name: github.triggering_actor
+        run: echo "${{ github.triggering_actor }}"
       - name: contains
         run: echo "${{ contains(fromJSON(needs.read-file.outputs.require-result), github.actor) }}"
       - name: merged
