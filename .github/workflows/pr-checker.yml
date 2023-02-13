@@ -11,6 +11,8 @@ jobs:
   output-log:
     runs-on: ubuntu-latest
     steps:
+      - name: github.sender1
+        run: echo "${{ github.event.sender }}"
       - name: github.pull_request
         run: echo "${{ github.event.pull_request }}"
       - name: sender
